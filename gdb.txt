@@ -1,0 +1,142 @@
+Currently logging to "gdb.txt".
+Logs will overwrite the log file.
+Output is being logged and displayed.
+Starting program: /da0/dummy/C_ch2/base64/base32 unix
+[Inferior 1 (process 2426) exited normally]
+Breakpoint 1 at 0x8048fc7: file base64.c, line 300.
+Starting program: /da0/dummy/C_ch2/base64/base32 unix
+
+Breakpoint 1, b32_enc (s=0xbfbfeceb "unix", b=0xbfbfe734 "", len=4) at base64.c:300
+300		unsigned char ap[5] = {0,6,4,3,1};
+308				x |= s[i];
+292		return rtsize;
+293	}
+294	
+295	/* general purpose Base32 encoding */ 
+296	void b32_enc(unsigned char *s, unsigned char *b, unsigned int len)
+297	{
+298		unsigned long long x;	/* c99 only */
+299		unsigned int i,w,z;
+300		unsigned char ap[5] = {0,6,4,3,1};
+301	
+302		w = x = 0;
+303		/* 	in base32 per 5 bytes of input we get 40 bits that must
+304			be treated as eight 5 bits groups, each 5 bit number
+305			will be used as an index into the base32 alphabet  */
+306		for (i = 0; i < len; i++) {
+307			for (z = 0; z < 5 && i < len; z++, i++) {
+308				x |= s[i];
+309				x <<= 8;
+310			}
+311			/* compute the number of shifts needed to align all bytes
+312				to the most significant part of x, this avoids several
+313				iterations of one 'test, shift, and increment' loop */
+314			x <<= (7 - z) << 3; /* mul by 8 */ 
+315	
+316			/* 	this block could be optimized for size within a loop, but that
+317				will involve a and additional 'test and increment' step on a 
+318				loop, which will make the code a tiny fraction more slower,
+319				this is coded for speed, not size */
+320			b[w++] = b32_alp[x >> 59];
+321			b[w++] = b32_alp[(x << 5) >> 59];
+322			b[w++] = b32_alp[(x << 10) >> 59];
+323			b[w++] = b32_alp[(x << 15) >> 59];
+324			b[w++] = b32_alp[(x << 20) >> 59];
+325			b[w++] = b32_alp[(x << 25) >> 59];
+326			b[w++] = b32_alp[(x << 30) >> 59];
+327			b[w++] = b32_alp[(x << 35) >> 59];
+328			--i;
+329		}
+330		b[w] = '\0';
+331		for (i = ap[len % 5]; i; i--) {
+332			b[--w] = PAD; 
+333		}		
+334	}
+323			b[w++] = b32_alp[(x << 15) >> 59];
+331		for (i = ap[len % 5]; i; i--) {
+Single stepping until exit from function _start1,
+which has no line number information.
+[Inferior 1 (process 2428) exited normally]
+Quit
+Breakpoint 2 at 0x8048fc7: file base64.c, line 300.
+Starting program: /da0/dummy/C_ch2/base64/base32 hello
+
+Breakpoint 2, b32_enc (s=0xbfbfeceb "hello", b=0xbfbfe734 "", len=5) at base64.c:300
+300		unsigned char ap[5] = {0,6,4,3,1};
+292		return rtsize;
+293	}
+294	
+295	/* general purpose Base32 encoding */ 
+296	void b32_enc(unsigned char *s, unsigned char *b, unsigned int len)
+297	{
+298		unsigned long long x;	/* c99 only */
+299		unsigned int i,w,z;
+300		unsigned char ap[5] = {0,6,4,3,1};
+301	
+302		w = x = 0;
+303		/* 	in base32 per 5 bytes of input we get 40 bits that must
+304			be treated as eight 5 bits groups, each 5 bit number
+305			will be used as an index into the base32 alphabet  */
+306		for (i = 0; i < len; i++) {
+307			for (z = 0; z < 5 && i < len; z++, i++) {
+308				x |= s[i];
+309				x <<= 8;
+310			}
+311			/* compute the number of shifts needed to align all bytes
+312				to the most significant part of x, this avoids several
+313				iterations of one 'test, shift, and increment' loop */
+314			x <<= (7 - z) << 3; /* mul by 8 */ 
+315	
+316			/* 	this block could be optimized for size within a loop, but that
+317				will involve a and additional 'test and increment' step on a 
+318				loop, which will make the code a tiny fraction more slower,
+319				this is coded for speed, not size */
+320			b[w++] = b32_alp[x >> 59];
+321			b[w++] = b32_alp[(x << 5) >> 59];
+322			b[w++] = b32_alp[(x << 10) >> 59];
+323			b[w++] = b32_alp[(x << 15) >> 59];
+324			b[w++] = b32_alp[(x << 20) >> 59];
+325			b[w++] = b32_alp[(x << 25) >> 59];
+326			b[w++] = b32_alp[(x << 30) >> 59];
+327			b[w++] = b32_alp[(x << 35) >> 59];
+328			--i;
+329		}
+330		b[w] = '\0';
+331		for (i = ap[len % 5]; i; i--) {
+332			b[--w] = PAD; 
+333		}		
+334	}
+302		w = x = 0;
+306		for (i = 0; i < len; i++) {
+307			for (z = 0; z < 5 && i < len; z++, i++) {
+308				x |= s[i];
+309				x <<= 8;
+307			for (z = 0; z < 5 && i < len; z++, i++) {
+308				x |= s[i];
+309				x <<= 8;
+307			for (z = 0; z < 5 && i < len; z++, i++) {
+308				x |= s[i];
+309				x <<= 8;
+307			for (z = 0; z < 5 && i < len; z++, i++) {
+308				x |= s[i];
+309				x <<= 8;
+307			for (z = 0; z < 5 && i < len; z++, i++) {
+308				x |= s[i];
+309				x <<= 8;
+307			for (z = 0; z < 5 && i < len; z++, i++) {
+314			x <<= (7 - z) << 3; /* mul by 8 */ 
+320			b[w++] = b32_alp[x >> 59];
+321			b[w++] = b32_alp[(x << 5) >> 59];
+322			b[w++] = b32_alp[(x << 10) >> 59];
+327			b[w++] = b32_alp[(x << 35) >> 59];
+328			--i;
+306		for (i = 0; i < len; i++) {
+334	}
+main (argc=2, argv=0xbfbfeb94) at base32.c:13
+13			printf("%s\n", buf);
+15		return 0;
+A debugging session is active.
+
+	Inferior 1 [process 2430] will be killed.
+
+Quit anyway? (y or n) 

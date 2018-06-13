@@ -1,0 +1,10 @@
+uu:
+		gcc uuencode.c uu.c lib.c -o uuencode -Wall -std=c99 -pedantic -g3
+		gcc uudecode.c uu.c lib.c -o uudecode -Wall -std=c99 -pedantic -g3
+
+uuencode: uuencode.c
+		gcc uuencode.c uu.c lib.c -o uuencode -Wall -std=c99 -pedantic -g3
+uudecode: uudecode.c
+		gcc uudecode.c uu.c lib.c -o uudecode -Wall -std=c99 -pedantic -g3
+clean:
+		rm -fr uuencode uudecode

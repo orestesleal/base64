@@ -1,0 +1,134 @@
+#include <stdio.h>
+/*
+ * 	Implementations of Base64 (encoder only) and Base16 encoding
+ *	this versions are text only (i.e: do not work with binary data)	
+ *	Orestes Leal Rodriguez 2015 <lukes357@gmail.com>
+ *
+ *	-devlog
+ *		Aug 2: initial revision, text only encoding
+ *		Aug 3: support for escaped characters.
+ *		Aug 6: added base64 decoding support
+ */
+#define ESC '\\'
+#define PAD '='
+char b64_alp[65] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+static inline unsigned char get_token_pos(char tk)
+{
+	unsigned char pos;
+	for (pos = 0; tk != b64_alp[pos]; ++pos) ;
+	return pos;
+}
+/* decode a base64 string into the original text string */
+void base64_dec(char *s, char b[])
+{
+	unsigned int x;
+	int i,z, w;
+
+	x = 0;
+	w = 0;
+	for (i = 0; s[i] != '=' && s[i]; i++) {
+		for (x = 0, z = 0; z < 4 && s[i] && s[i] != '='; z++) {
+			x |= (get_token_pos(s[i++]));
+			(z < 3 && s[i] != '=' && s[i]) ? x <<= 6 : 0;
+		}
+
+		for (;z != 4; z++) { /* when fewer of 24 bits of input are present 
+			x <<= 6;		   add 0s on the right to form an integral
+			x |= 0;		   	   number of 6 bit groups (sec. 4. rfc4648 */
+		}
+			
+		/*
+		switch (z) {
+			case 2:
+				x <<= 20;
+				break;
+			case 3:
+				x <<= 14;
+				break;
+			default:
+				x <<= 8;
+				break;
+		}
+		*/
+		x <<= 8;
+		b[w++] = x >> 24;
+		b[w++] = (x << 8) >> 24;
+		b[w++] = (x << 16) >> 24;
+
+		/*
+		b[w++] = x >> 24;
+		b[w++] = z > 2 ? (x << 8) >> 24 : '\0';
+		b[w++] = z > 3 ? (x << 16) >> 24 : '\0';
+		*/
+		--i;
+	}
+	b[w] = '\0';
+}
+void base64_enc(char *s, char b[])
+{
+	unsigned int x, npad;
+	int i;
+
+	npad = 0;
+	for (i = 0; *s; i++) {
+		x = s[0] == ESC ? s++[1]-'0' : s[0];
+		x <<= 8;
+		x |= s[1] == ESC ? s++[2]-'0' : s[1];
+		x <<= 8;
+		x |= s[2] == ESC ? s++[3]-'0' : s[2];
+		x <<= 8;
+		b[i++] = b64_alp[x >> 26];
+		b[i++] = b64_alp[(x << 6) >> 26];
+
+		if (s[1] == '\0') { /* quantum of encoding of 8 bits */
+			npad = 2;
+			break;
+		}
+		b[i++] = b64_alp[(x << 12) >> 26];
+		
+		if (s[2] == '\0') { /* quantum of 16 bits */
+			npad = 1;
+			break;
+		}
+		b[i] = b64_alp[(x << 18) >> 26];
+		s += 3; /* point to the next 24 bit group */ 
+	}
+	for (;npad > 0; npad--) { /* add padding if needed */
+		b[i++] = '=';
+	}
+	b[i] = '\0';
+}
+void base16_encoder(char *s, char b[])
+{
+	char b16_alp[] = "0123456789ABCDEF";
+	int i;
+	for (i = 0; *s; i++, s++) { 
+		unsigned char x = (unsigned char)*s >> 4;
+		unsigned char z = ((unsigned char)(*s << 4)) >> 4;
+		b[i] = b16_alp[x];
+		b[++i] = b16_alp[z];
+	}
+	b[i] = '\0';
+}
+void base16_decoder(char *b16, char b[])
+{
+	int i;
+	unsigned char n1, n2;
+	for (i = 0; *b16; i++, b16+=2) {
+		if (*b16  < 'A') {
+			n1 = (*b16 - '0') << 4;
+		}
+		else {
+			n1 = (*b16 - 0x37) << 4;
+		}
+		if (*(b16 + 1) < 'A') {
+			n2 = *(b16 + 1) - '0';
+		}
+		else {
+			n2 = *(b16 + 1) - 0x37;
+		}
+		b[i] =  n1 | n2;
+	}
+	b[i] = '\0';
+}
