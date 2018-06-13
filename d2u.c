@@ -7,7 +7,7 @@
  *	this program makes uses of lib.{c,h} which contains some
  *	utils.
  *
- *	Orestes Leal Rodríguez 2015 <lukes357@gmail.com>
+ *	Orestes Leal RodrÃ­guez 2015 <olealrd1981@gmail.com>
  *
  *	2015-09-01:		first version
  *  2015-09-02:		command switches for verbose output (-v) and
