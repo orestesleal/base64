@@ -462,7 +462,7 @@ unsigned int b32_dec(unsigned char *s, char *b, unsigned int len)
 	return rtsize;
 }
 /* general purpose base16 encoder */
-void b16_enc(const char *s, char *b, unsigned int len)
+void b16_enc(const unsigned char *s, char *b, unsigned int len)
 {
 	while (len--) {
 		*b++ = b16_alp[*s >> 4];
@@ -471,7 +471,7 @@ void b16_enc(const char *s, char *b, unsigned int len)
 	*b = '\0';
 }
 /* general purpose base16 decoder */
-unsigned int b16_dec(const char *s, char *b, unsigned int len)
+unsigned int b16_dec(const unsigned char *s, char *b, unsigned int len)
 {
 	unsigned char t[2],d;
 	unsigned int i;
