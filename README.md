@@ -6,6 +6,8 @@ encodings but that use the main library code.
 
 # Testing encoding/decoding
 
+You can opt to build using the included ``Makefile`` or doing the build manually as detailed in the next section:
+
 Base64:
 
     build: cc b64enc.c base64.c -o b64enc
@@ -31,8 +33,3 @@ Use the same  procedure for all other encodings replacing '64' by '32' or '16'
 Thanks,
 Orestes
 
-
-
-
-
-    
