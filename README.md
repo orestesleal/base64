@@ -9,8 +9,8 @@ Testing encoding/decoding
 
 Base64:
 
-    build: cc b64enc base64.c -o b64enc
-           cc b64dec base64.c -o b64dec
+    build: cc b64enc.c base64.c -o b64enc
+           cc b64dec.c base64.c -o b64dec
 
 
 Encode to base64
