@@ -1,6 +1,8 @@
 CC=cc
 CFLAGS=-I.
 
+all: b64enc b64dec b32enc b32dec b16enc b16dec
+
 b64enc: base64.o
 	$(CC) b64enc.c base64.o -o b64enc
 
