@@ -7,15 +7,22 @@ This ``C`` implementation tries to be compliant with ``rfc4648 <https://tools.ie
 
 ``Testing encoding/decoding``
 
-You can opt to build using the included ``Makefile`` or doing the build manually as detailed in the next section:
+You can opt to build using the included ``Makefile``
 
-``Building the utilities manually``:
+``Use``: 
+
+ - ``make b16enc b16dec`` to build the base16 encoder/decoder
+ - ``make b32enc b32dec`` to build the base32 encoder/decoder
+ - ``make b64enc b64dec`` to build the base64 encoder/decoder
+
+
+``To build manually do the following``:
 
     build: cc b64enc.c base64.c -o b64enc
            cc b64dec.c base64.c -o b64dec
 
 
-``Encode to base64``
+``Encoding to base64``
 
     ./b64enc  utf-8.sampler.txt utf-8.sampler.txt.b64
 
@@ -28,7 +35,8 @@ Now check utf-8.sampler.txt.decoded64 to see if it's an exact copy of the origin
 file (``utf-8.sampler.txt``).
 
 
-Use the same  procedure for all other encodings replacing '64' by '32' or '16'
+In regard to building the binary through make of manually use the same  procedure for all other encodings replacing ``64`` by ``32`` or ``16``.
+
 
 
 Thanks,
