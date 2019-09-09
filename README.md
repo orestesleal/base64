@@ -9,7 +9,7 @@ This ``C`` implementation tries to be compliant with ``rfc4648 <https://tools.ie
 
 You can opt to build using the included ``Makefile`` or doing the build manually as detailed in the next section:
 
-Base64:
+``Building the utilities manually``:
 
     build: cc b64enc.c base64.c -o b64enc
            cc b64dec.c base64.c -o b64dec
