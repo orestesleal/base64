@@ -25,7 +25,7 @@ You can opt to build using the included ``Makefile`` or doing the build manually
 
 
 Now check utf-8.sampler.txt.decoded64 to see if it's an exact copy of the original
-file (**utf-8.sampler.txt**
+file (``utf-8.sampler.txt``).
 
 
 Use the same  procedure for all other encodings replacing '64' by '32' or '16'
