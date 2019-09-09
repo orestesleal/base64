@@ -1,7 +1,6 @@
 # Base64 - base32 and base16 encoders/decoders implementation based on https://tools.ietf.org/html/rfc4648
 
-Base64.c is the library file with the C implementation, everything
-else is headers and useful utilities built to encode to the different
+Base64.c is the library file with the C implementation for all decoders and encoders (b16,b32 included), everything else is headers and useful utilities built to encode to the different
 encodings but that use the main library code.
 
 
