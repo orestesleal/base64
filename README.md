@@ -1,11 +1,11 @@
-# Base64, base32, base16 encoders/decoders based on rfc4648
+# Base64 - base32 and base16 encoders/decoders implementation based on https://tools.ietf.org/html/rfc4648
 
-Base64.c is the main file with the C implementation, everything
-else is headers or useful utilities built to encode to the different
-encodings but that use the main implementation code.
+Base64.c is the library file with the C implementation, everything
+else is headers and useful utilities built to encode to the different
+encodings but that use the main library code.
 
 
-Testing encoding/decoding
+# Testing encoding/decoding
 
 Base64:
 
@@ -13,11 +13,11 @@ Base64:
            cc b64dec.c base64.c -o b64dec
 
 
-Encode to base64
+# Encode to base64
 
     ./b64enc  utf-8.sampler.txt utf-8.sampler.txt.b64
 
-Decode the encode file back to the original
+# Decode the encode file back to the original
 
     ./b64dec utf-8.sampler.txt.b64 utf-8.sampler.txt.decoded64
 
