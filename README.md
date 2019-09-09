@@ -2,7 +2,7 @@
 
 This ``C`` implementation tries to be compliant with ``rfc4648 <https://tools.ietf.org/html/rfc4648>``
 
-**base64.c** is the library file with the ``C implementation`` for all decoders and encoders (b16,b32 included), plus some useful functions. Every else are users of this library.
+**base64.c** is the library file with the ``C implementation`` for all decoders and encoders (b16,b32 included), plus some useful functions. Everybody else are users of this library.
 
 
 
