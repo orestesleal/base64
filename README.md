@@ -5,11 +5,8 @@ This ``C`` implementation tries to be compliant with ``rfc4648 <https://tools.ie
 **base64.c** is the library file with the ``C implementation`` for all decoders and encoders (b16,b32 included), plus some useful functions. Every else are users of this library.
 
 
-``Testing encoding/decoding``
 
-You can opt to build using the included ``Makefile``
-
-``Use``: 
+You can opt to build using the included ``Makefile``, to build all the binaries just do ``make``. To build specific binaries do the following:
 
  - ``make b16enc b16dec`` to build the base16 encoder/decoder
  - ``make b32enc b32dec`` to build the base32 encoder/decoder
@@ -21,6 +18,7 @@ You can opt to build using the included ``Makefile``
     build: cc b64enc.c base64.c -o b64enc
            cc b64dec.c base64.c -o b64dec
 
+``Testing encoding/decoding:``
 
 ``Encoding to base64``
 
