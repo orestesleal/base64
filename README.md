@@ -2,7 +2,7 @@
 
 This ``C`` implementation tries to be compliant with ``rfc4648 <https://tools.ietf.org/html/rfc4648>``
 
-**base64.c** is the library file with the ``C implementation`` for all decoders and encoders (b16,b32 included), plus some useful functions, everything else is code that use the library.
+**base64.c** is the library file with the ``C implementation`` for all decoders and encoders (b16,b32 included), plus some useful functions, everything else is code that use the library. One user of my base32 code is here ``https://metacpan.org/pod/MIME::Base32::XS`` where the encoders/decoders are using as the backend to a ``Perl`` module named ``MIME::Base32::XS``
 
 
 
@@ -28,15 +28,8 @@ You can opt to build using the included ``Makefile``, to build all the binaries 
 
     ./b64dec utf-8.sampler.txt.b64 utf-8.sampler.txt.decoded64
 
-
 Now check utf-8.sampler.txt.decoded64 to see if it's an exact copy of the original
 file (``utf-8.sampler.txt``).
 
-
-In regard to building the binary through make of manually use the same  procedure for all other encodings replacing ``64`` by ``32`` or ``16``.
-
-
-
-Thanks,
-Orestes
+If using ``make`` to build specific binaries use the same procedure for all other encoders/decoders replacing ``64`` with ``32`` or ``16``.
 
