@@ -2,7 +2,9 @@
 
 This ``C`` implementation tries to be compliant with ``rfc4648 <https://tools.ietf.org/html/rfc4648>``
 
-**base64.c** is the library file with the ``C implementation`` for all decoders and encoders (b16,b32 included), plus some useful functions, everything else is code that use the library. One user of my base32 code is here ``https://metacpan.org/pod/MIME::Base32::XS`` where the encoders/decoders are using as the backend to a ``Perl`` module named ``MIME::Base32::XS``
+**base64.c** is the library file with the ``C implementation`` for all decoders and encoders (b16,b32 included), plus some useful functions, everything else is code that use the library. 
+
+One user of my ``base32`` code is here https://metacpan.org/pod/MIME::Base32::XS where the encoders/decoders are used as the backend code for a ``Perl`` module named ``MIME::Base32::XS``
 
 
 
