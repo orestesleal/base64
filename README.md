@@ -4,7 +4,7 @@ This ``C`` implementation tries to be compliant with ``rfc4648 <https://tools.ie
 
 **base64.c** is the library file with the ``C implementation`` for all decoders and encoders (b16,b32 included), plus some useful functions, everything else is code that use the library. 
 
-One user of my ``base32`` code is here https://metacpan.org/pod/MIME::Base32::XS where the encoders/decoders are used as the backend code for a ``Perl`` module named ``MIME::Base32::XS``
+One user of my ``base32`` code is here https://metacpan.org/pod/MIME::Base32::XS (specifically at https://metacpan.org/source/LTM/MIME-Base32-XS-0.09/XS.xs) where the base32 encoders/decoders are used as the backend for a ``Perl`` module named ``MIME::Base32::XS``
 
 
 
