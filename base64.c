@@ -305,7 +305,8 @@ unsigned int b64_dec(unsigned char *s, char b[], unsigned int len)
 			*/
 
 			/*	rfc4648 section 3.3 */ 
-			if ((s[i] >= 'A' && s[i] <= 'z') || 
+			if ((s[i] >= 'A' && s[i] <= 'Z') || 
+   		   		(s[i] >= 'a' && s[i] <= 'z') || 
    		   		(s[i] >= '0' && s[i] <= '9') || 
 	       		(s[i] == '+' || s[i] == '/') ) {
 

@@ -24,6 +24,12 @@ b32dec: base64.o
 base64.o: base64.c
 	$(CC) -c base64.c
 
-.PHONY: clean
+test: base64.o test_base64
+	./test_base64
+
+test_base64: base64.o test_base64.c
+	$(CC) $(CFLAGS) test_base64.c base64.o -o test_base64
+
+.PHONY: clean test
 clean:
-	rm -f *.o b64dec b64enc b32enc b32dec b16enc b16dec
+	rm -f *.o b64dec b64enc b32enc b32dec b16enc b16dec test_base64
