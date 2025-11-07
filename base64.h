@@ -10,7 +10,6 @@ void base64_dec(char *s, char b[]);
 void base64url_enc(char *s, char b[]);
 void base64url_dec(char *s, char b[]);
 unsigned char get_token_pos(char tk, unsigned char len, char alp[]);
-void base64_enc(char *s, char b[]);
 void b64_enc(unsigned const char *s, char b[], unsigned int len);
 unsigned int b64_dec(unsigned char *s, char b[], unsigned int len);
 unsigned int get_data_size(char *s, unsigned int len);
