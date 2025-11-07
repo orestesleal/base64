@@ -204,7 +204,7 @@ This code is used in production systems. One notable user is:
 
 ## License
 
-Copyright Orestes Leal Rodriguez 2015
+Copyright Orestes Leal Rodriguez 2015-2025
 
 ## Contributing
 

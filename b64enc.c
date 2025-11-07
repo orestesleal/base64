@@ -2,7 +2,7 @@
  *	test vector for encoding an input file to base64
  *	and write the encoded contents to a file.
  *
- *  Copyright Orestes Leal Rodríguez 2015 <lukes357@gmail.com>
+ *  Copyright Orestes Leal Rodríguez 2015-2025 <lukes357@gmail.com>
  */
 #include <stdio.h>
 #include <stdlib.h>
