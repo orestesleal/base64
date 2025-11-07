@@ -1,4 +1,9 @@
-/* encoding modes used by utilities functions */
+/*
+ * Base64, Base32, and Base16 encoding/decoding library
+ * Copyright Orestes Leal Rodriguez 2015-2025
+ *
+ * encoding modes used by utilities functions
+ */
 #define BASE64 1
 #define BASE32 2
 #define BASE16 3

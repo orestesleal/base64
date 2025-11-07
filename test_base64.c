@@ -1,6 +1,8 @@
 /*
  * Unit tests for base64 encoding/decoding functions
  * Run with: make test && ./test_base64
+ *
+ * Copyright Orestes Leal Rodriguez 2015-2025
  */
 #include <stdio.h>
 #include <string.h>

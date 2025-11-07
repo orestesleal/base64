@@ -10,7 +10,7 @@
  *		and base32 encoding and decoding functions, with support for binary
  *		and text input, all others functions work on text data only.
  *
- *	Orestes Leal Rodriguez 2015 <olealrd1981@gmail.com>
+ *	Orestes Leal Rodriguez 2015-2025 <olealrd1981@gmail.com>
  *
  *	-devlog
  *		Aug 2: initial revision, base16 and base64 text encoding

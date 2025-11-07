@@ -2,7 +2,7 @@
  *	test vector for decoding a base64 encoded file and 
  *	write to disk the decoded file using b32_dec
  *
- *  Copyright Orestes Leal Rodr�guez 2015 <lukes357@gmail.com>
+ *  Copyright Orestes Leal Rodr�guez 2015-2025 <lukes357@gmail.com>
  */
 #include <stdio.h>
 #include <stdlib.h>
