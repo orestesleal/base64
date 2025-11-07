@@ -1,6 +1,6 @@
 /*
  * 	Base64, Base32 and Base16 encodings (and variations) as they are 
- *	standarized by rfc4648 of 2006.
+ *	standardized by rfc4648 of 2006.
  *
  *	There are several encoding functions in this file, some are intended to 
  *	encode only text and the others encode any type of input, like binary (images,
@@ -259,7 +259,13 @@ void base16_decoder(char *b16, char b[])
 	}
 	b[i] = '\0';
 }
-/* general purpose base64 encoding */
+/**
+ * @brief Encode binary data to base64
+ * @param s Input data to encode
+ * @param b Output buffer (must be large enough)
+ * @param len Length of input data in bytes
+ * @note Output buffer should be at least ((len + 2) / 3) * 4 + 1 bytes
+ */
 void b64_enc(unsigned const char *s, char b[], unsigned int len)
 {
 	unsigned int x,i,w;
@@ -286,8 +292,15 @@ void b64_enc(unsigned const char *s, char b[], unsigned int len)
 		}
 	}
 }
-/* general purpose base64 decoding */
-unsigned int b64_dec(unsigned char *s, char b[], unsigned int len)
+/**
+ * @brief Decode base64 string to binary data
+ * @param s Base64 encoded string to decode
+ * @param b Output buffer for decoded data (must be large enough)
+ * @param len Length of input base64 string
+ * @return Number of decoded bytes, or 0 on error
+ * @note Output buffer should be at least (len / 4) * 3 bytes
+ */
+unsigned int b64_dec(const unsigned char *s, char b[], unsigned int len)
 {
 	unsigned int x,w,i,rtsize,z;
 	unsigned char pad,t;
@@ -383,6 +396,24 @@ unsigned int get_data_size(char *s, unsigned int len)
 		rtsize += pad == 2 ? 1 : 2;
 	}
 	return rtsize;
+}
+/**
+ * @brief Calculate required buffer size for base64 encoding
+ * @param input_len Length of input data in bytes
+ * @return Required buffer size in bytes (including null terminator)
+ */
+unsigned int b64_enc_size(unsigned int input_len)
+{
+	return ((input_len + 2) / 3) * 4 + 1; /* +1 for null terminator */
+}
+/**
+ * @brief Calculate required buffer size for base64 decoding
+ * @param input_len Length of base64 encoded string
+ * @return Required buffer size in bytes (including null terminator)
+ */
+unsigned int b64_dec_size(unsigned int input_len)
+{
+	return (input_len / 4) * 3 + 1; /* +1 for null terminator */
 }
 /* general purpose Base32 encoding */ 
 void b32_enc(unsigned char *s, unsigned char *b, unsigned int len)
@@ -642,7 +673,7 @@ void decode_rd_file(const char *src, const char *dst, unsigned char mode)
 	dec_buf = alloc(fd->size); 
 	switch (mode) {
 		case BASE64:
-			dec = b64_dec((unsigned char *)fd->addr, dec_buf, fd->size); 
+			dec = b64_dec((const unsigned char *)fd->addr, dec_buf, fd->size); 
 			break;
 		case BASE32:
 			dec = b32_dec((unsigned char *)fd->addr, dec_buf, fd->size); 
