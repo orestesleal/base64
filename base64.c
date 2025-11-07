@@ -79,6 +79,24 @@ char b64_url_alp[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123
 char b32_alp[32] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 static char b16_alp[17] = "0123456789ABCDEF";
 
+/* Lookup tables for O(1) character decoding */
+static const unsigned char b64_lookup[256] = {
+    ['A'] = 0,  ['B'] = 1,  ['C'] = 2,  ['D'] = 3,  ['E'] = 4,  ['F'] = 5,
+    ['G'] = 6,  ['H'] = 7,  ['I'] = 8,  ['J'] = 9,  ['K'] = 10, ['L'] = 11,
+    ['M'] = 12, ['N'] = 13, ['O'] = 14, ['P'] = 15, ['Q'] = 16, ['R'] = 17,
+    ['S'] = 18, ['T'] = 19, ['U'] = 20, ['V'] = 21, ['W'] = 22, ['X'] = 23,
+    ['Y'] = 24, ['Z'] = 25,
+    ['a'] = 26, ['b'] = 27, ['c'] = 28, ['d'] = 29, ['e'] = 30, ['f'] = 31,
+    ['g'] = 32, ['h'] = 33, ['i'] = 34, ['j'] = 35, ['k'] = 36, ['l'] = 37,
+    ['m'] = 38, ['n'] = 39, ['o'] = 40, ['p'] = 41, ['q'] = 42, ['r'] = 43,
+    ['s'] = 44, ['t'] = 45, ['u'] = 46, ['v'] = 47, ['w'] = 48, ['x'] = 49,
+    ['y'] = 50, ['z'] = 51,
+    ['0'] = 52, ['1'] = 53, ['2'] = 54, ['3'] = 55, ['4'] = 56, ['5'] = 57,
+    ['6'] = 58, ['7'] = 59, ['8'] = 60, ['9'] = 61,
+    ['+'] = 62, ['/'] = 63
+    /* All other values remain 0 (invalid) */
+};
+
 /* get the position of the character 'tk' on the alphabet
    'alp' and test at most 'len' positions on it */
 unsigned char get_token_pos(char tk, unsigned char len, char alp[])
@@ -244,7 +262,7 @@ void base16_decoder(char *b16, char b[])
 /* general purpose base64 encoding */
 void b64_enc(unsigned const char *s, char b[], unsigned int len)
 {
-	register unsigned int x,i,w;
+	unsigned int x,i,w;
 	unsigned char rm,z;
 
 	w = 0;
@@ -272,8 +290,8 @@ void b64_enc(unsigned const char *s, char b[], unsigned int len)
 unsigned int b64_dec(unsigned char *s, char b[], unsigned int len)
 {
 	unsigned int x,w,i,rtsize,z;
-	unsigned char pad,t,l = 0;
-	t = l = pad = 0;
+	unsigned char pad,t;
+	t = pad = 0;
 
 	/* handle empty input */
 	if (len == 0) {
@@ -322,10 +340,13 @@ unsigned int b64_dec(unsigned char *s, char b[], unsigned int len)
    		   		(s[i] >= '0' && s[i] <= '9') || 
 	       		(s[i] == '+' || s[i] == '/') ) {
 
-				/* since the input is in range within the alphabet
-				   there is not possibility of failure, loop and 
-				   find the position */
-				for (t = 0; s[i] != b64_alp[t]; t++);
+				/* use lookup table for O(1) character decoding */
+				t = b64_lookup[(unsigned char)s[i]];
+				if (t == 0 && s[i] != 'A') {  /* 'A' maps to 0, need explicit check */
+					fprintf(stderr, "b64_dec: error, non alphabet char found -> %c -> %d\n",
+							s[i], s[i]);
+					exit(EXIT_FAILURE);
+				}
 				x |= t;
 				z < 3 && i+1 < len ? x <<= 6 : 0;
 			} else {
