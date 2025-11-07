@@ -1,1 +1,15 @@
 old/*
+
+# Build artifacts and binaries
+*.o
+b64enc
+b64dec
+b32enc
+b32dec
+b16enc
+b16dec
+test_base64
+
+# Generated files
+*.b64
+*.decoded64
