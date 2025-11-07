@@ -2,7 +2,7 @@
  *	test vector for decoding a base64 encoded file and 
  *	write to disk the decoded file using b32_dec
  *
- *  Copyright Orestes Leal Rodríguez 2015 <lukes357@gmail.com>
+ *  Copyright Orestes Leal Rodrï¿½guez 2015 <lukes357@gmail.com>
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 		if (argv[2]) {
 			/* allocate buffer and decode */
 			dec_buf = alloc(fd->size); 
-			dec = b64_dec(fd->addr, dec_buf, fd->size); /*  decode the base64 string on 'dec_buf' */
+			dec = b64_dec((const unsigned char *)fd->addr, dec_buf, fd->size); /*  decode the base64 string on 'dec_buf' */
 
             if ((ofd = open(argv[2], O_CREAT | O_RDWR, S_IRUSR | O_TRUNC | S_IWUSR)) == -1) {
             	fprintf(stderr, "open(2) error, can't create or truncate %s\n", argv[2]);
