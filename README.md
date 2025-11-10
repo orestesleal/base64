@@ -177,10 +177,10 @@ printf "\x00\xFF\x42" | ./b64enc | ./b64dec | od -An -tx1
 
 ### Utility Functions
 
-- `encode_wr_file()` - Encode a file and write to another file
-- `decode_rd_file()` - Read and decode a file, write to another file
-- `get_file()` - Load a file into memory
-- `alloc()` - Memory allocation helper
+- `encode_wr_file()` - Encode a file and write to another file (returns 0 on success, -1 on error)
+- `decode_rd_file()` - Read and decode a file, write to another file (returns 0 on success, -1 on error)
+- `get_file()` - Load a file into memory (caller owns the returned buffer)
+- `alloc()` - Memory allocation helper that returns `NULL` on failure without terminating the process
 - `b64_enc_size()` - Calculate required buffer size for encoding
 - `b64_dec_size()` - Calculate required buffer size for decoding
 
