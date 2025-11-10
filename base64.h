@@ -14,19 +14,20 @@ void base64_enc(char *s, char b[]);
 void base64_dec(char *s, char b[]);
 void base64url_enc(char *s, char b[]);
 void base64url_dec(char *s, char b[]);
-unsigned char get_token_pos(char tk, unsigned char len, char alp[]);
-void b64_enc(unsigned const char *s, char b[], unsigned int len);
+int get_token_pos(char tk, unsigned char len, const char alp[]);
+void b64_enc(const unsigned char *s, char b[], unsigned int len);
 unsigned int b64_dec(const unsigned char *s, char b[], unsigned int len);
 unsigned int get_data_size(char *s, unsigned int len);
 unsigned int b64_enc_size(unsigned int input_len);
 unsigned int b64_dec_size(unsigned int input_len);
-void b32_enc(unsigned char *s, unsigned char *b, unsigned int len);
-unsigned int b32_dec(unsigned char *s, char *b, unsigned int len);
+void b32_enc(const unsigned char *s, unsigned char *b, unsigned int len);
+unsigned int b32_dec(const unsigned char *s, char *b, unsigned int len);
 void b16_enc(const unsigned char *s, char *b, unsigned int len);
 unsigned int b16_dec(const char *s, char *b, unsigned int len);
-void encode_wr_file(const char *src, const char *dst, unsigned char mode);
-void decode_rd_file(const char *src, const char *dst, unsigned char mode);
+int encode_wr_file(const char *src, const char *dst, unsigned char mode);
+int decode_rd_file(const char *src, const char *dst, unsigned char mode);
 struct finfo *get_file(const char *f);
+void free_finfo(struct finfo *info);
 char *alloc(unsigned int size);
 
 struct finfo {  /* used by 'get_file' to return file information */

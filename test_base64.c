@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "base64.h"
 
 #define TEST_ASSERT(cond, msg) \
@@ -178,20 +179,96 @@ int test_b64_unicode() {
     const char *unicode = "Hello 世界 🌍";
     char encoded[256];
     char decoded[256];
-    
+
     b64_enc((unsigned char*)unicode, encoded, strlen(unicode));
     unsigned int dec_len = b64_dec((unsigned char*)encoded, decoded, strlen(encoded));
-    
+
     TEST_ASSERT(dec_len == strlen(unicode), "Unicode decode length");
     TEST_ASSERT(memcmp(unicode, decoded, dec_len) == 0, "Unicode round-trip");
-    
+
     printf("PASS: Unicode test\n");
+    return 0;
+}
+
+int test_b64_invalid_input() {
+    const char *invalid = "invalid*base64";
+    char decoded[256];
+
+    errno = 0;
+    unsigned int dec_len = b64_dec((unsigned char*)invalid, decoded, strlen(invalid));
+
+    TEST_ASSERT(dec_len == 0, "Invalid Base64 should return 0");
+    TEST_ASSERT(errno == EINVAL, "Invalid Base64 should set errno");
+
+    printf("PASS: Invalid Base64 input test\n");
+    return 0;
+}
+
+int test_b32_roundtrip() {
+    const unsigned char data[] = {0xDE, 0xAD, 0xBE, 0xEF, 0x42};
+    char encoded[128];
+    char decoded[128];
+
+    b32_enc(data, (unsigned char *)encoded, sizeof(data));
+    errno = 0;
+    unsigned int dec_len = b32_dec((const unsigned char *)encoded, decoded, strlen(encoded));
+
+    TEST_ASSERT(errno == 0, "Base32 round-trip errno");
+    TEST_ASSERT(dec_len == sizeof(data), "Base32 round-trip length");
+    TEST_ASSERT(memcmp(data, decoded, dec_len) == 0, "Base32 round-trip content");
+
+    printf("PASS: Base32 round-trip test\n");
+    return 0;
+}
+
+int test_b32_invalid_input() {
+    const char *invalid = "MZXW6!=="; // '!' is invalid in Base32 alphabet
+    char decoded[128];
+
+    errno = 0;
+    unsigned int dec_len = b32_dec((const unsigned char *)invalid, decoded, strlen(invalid));
+
+    TEST_ASSERT(dec_len == 0, "Invalid Base32 should return 0");
+    TEST_ASSERT(errno == EINVAL, "Invalid Base32 should set errno");
+
+    printf("PASS: Invalid Base32 input test\n");
+    return 0;
+}
+
+int test_b16_roundtrip() {
+    const unsigned char data[] = {0x00, 0x11, 0x22, 0x33, 0xFE, 0xDC, 0xBA, 0x98};
+    char encoded[128];
+    char decoded[128];
+
+    b16_enc(data, encoded, sizeof(data));
+    errno = 0;
+    unsigned int dec_len = b16_dec(encoded, decoded, strlen(encoded));
+
+    TEST_ASSERT(errno == 0, "Base16 round-trip errno");
+    TEST_ASSERT(dec_len == sizeof(data), "Base16 round-trip length");
+    TEST_ASSERT(memcmp(data, decoded, dec_len) == 0, "Base16 round-trip content");
+
+    printf("PASS: Base16 round-trip test\n");
+    return 0;
+}
+
+int test_b16_invalid_input() {
+    const char *invalid = "0G"; // 'G' is invalid in hexadecimal alphabet
+    char decoded[8];
+
+    errno = 0;
+    unsigned int dec_len = b16_dec(invalid, decoded, strlen(invalid));
+
+    TEST_ASSERT(dec_len == 0, "Invalid Base16 should return 0");
+    TEST_ASSERT(errno == EINVAL, "Invalid Base16 should set errno");
+
+    printf("PASS: Invalid Base16 input test\n");
     return 0;
 }
 
 int main(void) {
     int failures = 0;
-    
+
     printf("Running Base64 tests...\n");
     printf("======================\n\n");
     
@@ -203,6 +280,11 @@ int main(void) {
     failures += test_b64_large_input();
     failures += test_b64_special_chars();
     failures += test_b64_unicode();
+    failures += test_b64_invalid_input();
+    failures += test_b32_roundtrip();
+    failures += test_b32_invalid_input();
+    failures += test_b16_roundtrip();
+    failures += test_b16_invalid_input();
     
     printf("\n======================\n");
     if (failures == 0) {
